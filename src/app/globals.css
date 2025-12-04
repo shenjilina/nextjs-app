@@ -1,3 +1,4 @@
+@import "../styles/reset.css";
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -121,13 +122,3 @@
   }
 } */
 
-html, body {
-  height: 100%;
-  padding: 0;
-  margin: 0;
-}
-.app {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
