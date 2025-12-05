@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import {
   PenLine,
-  Search,
   Sparkles,
   ChevronLeft,
   ChevronRight,
@@ -18,8 +17,8 @@ export default function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
 
   const nav = [
-    { label: "新聊天", icon: PenLine, href: "/chat/new" },
-    { label: "搜索聊天", icon: Search, href: "/chat/search" },
+    { label: "新聊天", icon: PenLine, href: "/chat" },
+    // { label: "搜索聊天", icon: Search, href: "/chat/search" },
     // { label: "库", icon: Book, href: "/chat/library" },
     // { label: "项目", icon: FolderOpen, href: "/chat/projects" },
   ];
@@ -73,7 +72,7 @@ export default function Sidebar() {
               <Button
                 key={item.href}
                 asChild
-                variant={active ? "default" : "secondary"}
+                variant="secondary"
                 className={cn(
                   "w-full justify-start",
                   collapsed && "justify-center px-0"
@@ -138,11 +137,6 @@ export default function Sidebar() {
                 </div>
               )}
             </div>
-            {!collapsed && (
-              <Button size="sm" variant="outline" className="ml-auto">
-                升级
-              </Button>
-            )}
           </div>
         </div>
       </div>
