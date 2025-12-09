@@ -2,24 +2,42 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { useI18n } from '@/lib/i18n'
+import useFetch from '@/hooks/useFetch'
 import { PenLine, Sparkles, ChevronLeft, ChevronRight } from 'lucide-react'
 import ModalDialog from './ModalDialog'
-
-interface UserSettings {
-  theme: "system" | "light" | "dark"
-  language: 'zh' | 'en'
-}
 
 export default function Sidebar() {
   const pathname = usePathname()
   const [collapsed, setCollapsed] = useState(false)
   const [open, setOpen] = useState(false)
   const { t } = useI18n()
-  
+  const { get } = useFetch()
+  const [user, setUser] = useState<{
+    id: string
+    name: string
+    email: string
+    plan: 'free' | 'pro'
+    language: 'zh' | 'en'
+    theme: 'system' | 'light' | 'dark'
+  } | null>(null)
+
+  useEffect(() => {
+    get('/api/v1/users', { query: { id: 'u_1' } })
+      .then((data) => {
+        if (Array.isArray(data) && data?.length) {
+          setUser(data[0] as any);
+        }
+      })
+      .catch(() => {})
+  }, [])
+
+  const initial = (user?.name?.[0] ?? 'S').toUpperCase()
+  const planLabel = user?.plan === 'free' ? t('free') : 'Pro'
+
   // Memoize navigation items to avoid unnecessary re-renders
   const nav = useMemo(() => [{ label: t('newChat'), icon: PenLine, href: '/chat' }], [t])
 
@@ -112,12 +130,12 @@ export default function Sidebar() {
             >
               <div className="flex items-center gap-2">
                 <span className="inline-flex size-7 items-center justify-center rounded-full bg-orange-600 text-white text-xs">
-                  S
+                  {initial}
                 </span>
                 {!collapsed && (
                   <div className="leading-tight">
-                    <span className="text-sm">shen jilin</span>
-                    <div className="text-xs text-muted-foreground">{t('free')}</div>
+                    <span className="text-sm">{user?.name ?? '...'}</span>
+                    <div className="text-xs text-muted-foreground">{planLabel}</div>
                   </div>
                 )}
               </div>
