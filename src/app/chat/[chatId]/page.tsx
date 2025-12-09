@@ -16,16 +16,9 @@ import {
 import { Message, MessageContent } from "@/components/ai-elements/message";
 import {
   PromptInput,
-  PromptInputActionAddAttachments,
-  PromptInputActionMenu,
-  PromptInputActionMenuContent,
-  PromptInputActionMenuTrigger,
-  PromptInputAttachment,
-  PromptInputAttachments,
   PromptInputBody,
   PromptInputButton,
   PromptInputFooter,
-  PromptInputHeader,
   type PromptInputMessage,
   PromptInputSubmit,
   PromptInputTextarea,
@@ -58,10 +51,11 @@ import {
 } from "@/components/ai-elements/sources";
 import { Suggestion, Suggestions } from "@/components/ai-elements/suggestion";
 import type { ToolUIPart } from "ai";
-import { CheckIcon, GlobeIcon, MicIcon } from "lucide-react";
+import { CheckIcon } from "lucide-react";
 import { nanoid } from "nanoid";
 import { useCallback, useState } from "react";
 import { toast } from "sonner";
+import models from "../config/index";
 
 type MessageType = {
   key: string;
@@ -270,23 +264,6 @@ Don't overuse these hooks! They come with their own overhead. Only use them when
   },
 ];
 
-const models = [
-  {
-    id: "gpt-4o",
-    name: "GPT-4o",
-    chef: "OpenAI",
-    chefSlug: "openai",
-    providers: ["openai", "azure"],
-  },
-  {
-    id: "gpt-4o-mini",
-    name: "GPT-4o Mini",
-    chef: "OpenAI",
-    chefSlug: "openai",
-    providers: ["openai", "azure"],
-  },
-];
-
 const suggestions = [
   "What are the latest trends in AI?",
   "How does machine learning work?",
@@ -307,11 +284,9 @@ const mockResponses = [
 ];
 
 const ChatBox = () => {
-  const [model, setModel] = useState<string>(models[0].id);
+  const [selectedModel, setSelectedModel] = useState<string>(models[0].id);
   const [modelSelectorOpen, setModelSelectorOpen] = useState(false);
   const [text, setText] = useState<string>("");
-  const [useWebSearch, setUseWebSearch] = useState<boolean>(false);
-  const [useMicrophone, setUseMicrophone] = useState<boolean>(false);
   const [status, setStatus] = useState<
     "submitted" | "streaming" | "ready" | "error"
   >("ready");
@@ -321,7 +296,9 @@ const ChatBox = () => {
   );
   console.log(streamingMessageId);
 
-  const selectedModelData = models.find((m) => m.id === model);
+  const selectedModelData = models.find((m) => m.id === selectedModel);
+
+  const chefs = Array.from(new Set(models.map((model) => model.chef)));
 
   const streamResponse = useCallback(
     async (messageId: string, content: string) => {
@@ -492,11 +469,6 @@ const ChatBox = () => {
         </Suggestions>
         <div className="w-full px-4 pb-4">
           <PromptInput globalDrop multiple onSubmit={handleSubmit}>
-            <PromptInputHeader>
-              <PromptInputAttachments>
-                {(attachment) => <PromptInputAttachment data={attachment} />}
-              </PromptInputAttachments>
-            </PromptInputHeader>
             <PromptInputBody>
               <PromptInputTextarea
                 onChange={(event) => setText(event.target.value)}
@@ -505,26 +477,6 @@ const ChatBox = () => {
             </PromptInputBody>
             <PromptInputFooter>
               <PromptInputTools>
-                <PromptInputActionMenu>
-                  <PromptInputActionMenuTrigger />
-                  <PromptInputActionMenuContent>
-                    <PromptInputActionAddAttachments />
-                  </PromptInputActionMenuContent>
-                </PromptInputActionMenu>
-                <PromptInputButton
-                  onClick={() => setUseMicrophone(!useMicrophone)}
-                  variant={useMicrophone ? "default" : "ghost"}
-                >
-                  <MicIcon size={16} />
-                  <span className="sr-only">Microphone</span>
-                </PromptInputButton>
-                <PromptInputButton
-                  onClick={() => setUseWebSearch(!useWebSearch)}
-                  variant={useWebSearch ? "default" : "ghost"}
-                >
-                  <GlobeIcon size={16} />
-                  <span>Search</span>
-                </PromptInputButton>
                 <ModelSelector
                   onOpenChange={setModelSelectorOpen}
                   open={modelSelectorOpen}
@@ -547,7 +499,7 @@ const ChatBox = () => {
                     <ModelSelectorInput placeholder="Search models..." />
                     <ModelSelectorList>
                       <ModelSelectorEmpty>No models found.</ModelSelectorEmpty>
-                      {["OpenAI", "Anthropic", "Google"].map((chef) => (
+                      {chefs.map((chef) => (
                         <ModelSelectorGroup key={chef} heading={chef}>
                           {models
                             .filter((m) => m.chef === chef)
@@ -555,7 +507,7 @@ const ChatBox = () => {
                               <ModelSelectorItem
                                 key={m.id}
                                 onSelect={() => {
-                                  setModel(m.id);
+                                  setSelectedModel(m.id);
                                   setModelSelectorOpen(false);
                                 }}
                                 value={m.id}
@@ -570,7 +522,7 @@ const ChatBox = () => {
                                     />
                                   ))}
                                 </ModelSelectorLogoGroup>
-                                {model === m.id ? (
+                                {selectedModel === m.id ? (
                                   <CheckIcon className="ml-auto size-4" />
                                 ) : (
                                   <div className="ml-auto size-4" />

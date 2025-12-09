@@ -1,6 +1,6 @@
-"use client";
-import { useRef, useState } from "react";
-import { Button } from "@/components/ui/button";
+'use client'
+import { useRef, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import {
   PromptInput,
   PromptInputBody,
@@ -9,64 +9,109 @@ import {
   PromptInputSubmit,
   PromptInputTools,
   type PromptInputMessage,
-} from "@/components/ai-elements/prompt-input";
+  PromptInputButton,
+} from '@/components/ai-elements/prompt-input'
+import {
+  ModelSelector,
+  ModelSelectorContent,
+  ModelSelectorEmpty,
+  ModelSelectorGroup,
+  ModelSelectorInput,
+  ModelSelectorItem,
+  ModelSelectorList,
+  ModelSelectorLogo,
+  ModelSelectorLogoGroup,
+  ModelSelectorName,
+  ModelSelectorTrigger,
+} from '@/components/ai-elements/model-selector'
+import { CheckIcon } from 'lucide-react'
+import models from './config/index'
 
 export default function ChatPage() {
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const [text, setText] = useState<string>("");
-  const [status, setStatus] = useState<
-    "submitted" | "streaming" | "ready" | "error"
-  >("ready");
+  const router = useRouter()
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const [text, setText] = useState<string>('')
+  const [status, setStatus] = useState<'submitted' | 'streaming' | 'ready' | 'error'>('ready')
   const handleSubmit = (message: PromptInputMessage) => {
-    console.log(message);
-  };
+    console.log(message)
+    setStatus('streaming')
+    setTimeout(() => {
+      setStatus('submitted')
+      setText('')
+      // 跳转页面
+      router.push(`/chat/${message.text}`)
+    }, 2000)
+  }
+
+  const [selectedModel, setSelectedModel] = useState<string>(models[0].id)
+  const [modelselectoropen, setModelSelectorOpen] = useState(false)
+
+  const selectedModelData = models.find((model) => model.id === selectedModel)
+
+  // Get unique chefs in order of appearance
+  const chefs = Array.from(new Set(models.map((model) => model.chef)))
 
   return (
-    <div className="min-h-screen w-full flex items-start justify-center">
-      <div className="w-full max-w-3xl pt-24 px-4">
-        <h1 className="text-5xl font-bold tracking-widest text-center">
-          CHAT WIKI
-        </h1>
+    <div className="min-h-screen w-full flex items-center justify-center">
+      <div className="w-full max-w-3xl px-4">
+        <h1 className="text-5xl font-bold tracking-widest text-center">KIMI</h1>
         <div className="mt-8 rounded-2xl shadow-sm bg-card">
-          {/* <div className="px-5 pt-5">
-            <input
-              type="text"
-              placeholder="尽管问..."
-              className="w-full bg-transparent outline-none text-lg placeholder:text-muted-foreground"
-            />
-          </div>
-          <div className="flex items-center justify-between px-4 py-3">
-            <div className="flex flex-wrap gap-2">
-              <Button size="sm" variant="outline">OK Computer</Button>
-              <Button size="sm" variant="outline">PPT</Button>
-            </div>
-            <div className="flex items-center gap-1">
-              <Button variant="ghost" size="icon-sm"><Cpu className="size-4" /></Button>
-              <Button variant="ghost" size="icon-sm"><Presentation className="size-4" /></Button>
-              <Button variant="ghost" size="sm">K2 <ChevronDown className="size-4" /></Button>
-              <Button variant="ghost" size="icon-sm"><Clock className="size-4" /></Button>
-              <Button variant="ghost" size="icon-sm"><Settings className="size-4" /></Button>
-              <Button variant="secondary" size="icon"><ArrowUp className="size-4" /></Button>
-            </div>
-          </div> */}
           <PromptInput globalDrop multiple onSubmit={handleSubmit}>
             <PromptInputBody>
-              <PromptInputTextarea
-                placeholder="尽管问..."
-                ref={textareaRef}
-              ></PromptInputTextarea>
+              <PromptInputTextarea placeholder="尽管问..." ref={textareaRef}></PromptInputTextarea>
             </PromptInputBody>
             <PromptInputFooter>
               <PromptInputTools>
-                <Button size="sm" variant="outline">
-                  OK Computer
-                </Button>
-                <Button size="sm" variant="outline">
-                  Send
-                </Button>
+                <ModelSelector onOpenChange={setModelSelectorOpen} open={modelselectoropen}>
+                  <ModelSelectorTrigger asChild>
+                    <PromptInputButton>
+                      {selectedModelData?.chefSlug && (
+                        <ModelSelectorLogo provider={selectedModelData.chefSlug} />
+                      )}
+                      {selectedModelData?.name && (
+                        <ModelSelectorName>{selectedModelData.name}</ModelSelectorName>
+                      )}
+                    </PromptInputButton>
+                  </ModelSelectorTrigger>
+                  <ModelSelectorContent>
+                    <ModelSelectorInput placeholder="Search models..." />
+                    <ModelSelectorList>
+                      <ModelSelectorEmpty>No models found.</ModelSelectorEmpty>
+                      {chefs.map((chef) => (
+                        <ModelSelectorGroup key={chef} heading={chef}>
+                          {models
+                            .filter((m) => m.chef === chef)
+                            .map((m) => (
+                              <ModelSelectorItem
+                                key={m.id}
+                                onSelect={() => {
+                                  setSelectedModel(m.id)
+                                  setModelSelectorOpen(false)
+                                }}
+                                value={m.id}
+                              >
+                                <ModelSelectorLogo provider={m.chefSlug} />
+                                <ModelSelectorName>{m.name}</ModelSelectorName>
+                                <ModelSelectorLogoGroup>
+                                  {m.providers.map((provider) => (
+                                    <ModelSelectorLogo key={provider} provider={provider} />
+                                  ))}
+                                </ModelSelectorLogoGroup>
+                                {selectedModel === m.id ? (
+                                  <CheckIcon className="ml-auto size-4" />
+                                ) : (
+                                  <div className="ml-auto size-4" />
+                                )}
+                              </ModelSelectorItem>
+                            ))}
+                        </ModelSelectorGroup>
+                      ))}
+                    </ModelSelectorList>
+                  </ModelSelectorContent>
+                </ModelSelector>
               </PromptInputTools>
               <PromptInputSubmit
-                disabled={!(text.trim() || status) || status === "streaming"}
+                disabled={!(text.trim() || status) || status === 'streaming'}
                 status={status}
               />
             </PromptInputFooter>
@@ -74,5 +119,5 @@ export default function ChatPage() {
         </div>
       </div>
     </div>
-  );
+  )
 }
