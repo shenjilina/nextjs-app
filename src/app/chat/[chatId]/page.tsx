@@ -81,17 +81,17 @@ type MessageType = {
 
 const initialMessages: MessageType[] = [
   {
-    key: nanoid(),
+    key: "m1",
     from: "user",
     versions: [
       {
-        id: nanoid(),
+        id: "m1v1",
         content: "Can you explain how to use React hooks effectively?",
       },
     ],
   },
   {
-    key: nanoid(),
+    key: "m2",
     from: "assistant",
     sources: [
       {
@@ -137,7 +137,7 @@ const initialMessages: MessageType[] = [
     ],
     versions: [
       {
-        id: nanoid(),
+        id: "m2v1",
         content: `# React Hooks Best Practices
 
 React hooks are a powerful feature that let you use state and other React features without writing classes. Here are some tips for using them effectively:
@@ -178,28 +178,28 @@ Would you like me to explain any specific hook in more detail?`,
     ],
   },
   {
-    key: nanoid(),
+    key: "m3",
     from: "user",
     versions: [
       {
-        id: nanoid(),
+        id: "m3v1",
         content:
           "Yes, could you explain useCallback and useMemo in more detail? When should I use one over the other?",
       },
       {
-        id: nanoid(),
+        id: "m3v2",
         content:
           "I'm particularly interested in understanding the performance implications of useCallback and useMemo. Could you break down when each is most appropriate?",
       },
       {
-        id: nanoid(),
+        id: "m3v3",
         content:
           "Thanks for the overview! Could you dive deeper into the specific use cases where useCallback and useMemo make the biggest difference in React applications?",
       },
     ],
   },
   {
-    key: nanoid(),
+    key: "m4",
     from: "assistant",
     reasoning: {
       content: `The user is asking for a detailed explanation of useCallback and useMemo. I should provide a clear and concise explanation of each hook's purpose and how they differ.
@@ -213,7 +213,7 @@ Both hooks help with performance optimization, but they serve different purposes
     },
     versions: [
       {
-        id: nanoid(),
+        id: "m4v1",
         content: `## useCallback vs useMemo
 
 Both hooks help with performance optimization, but they serve different purposes:

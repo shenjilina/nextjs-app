@@ -1,0 +1,21 @@
+{
+  "settings": "Settings",
+  "manage": "Manage account & preferences",
+  "general": "General",
+  "theme": "Theme",
+  "language": "Language",
+  "phrases": "Phrases",
+  "autoExpand": "Auto expand reference pages",
+  "agreement": "User Agreement",
+  "privacy": "Privacy Policy",
+  "logout": "Log Out",
+  "cancel": "Cancel",
+  "confirm": "Confirm",
+  "free": "Free",
+  "newChat": "New Chat",
+  "yourChats": "Your Chats",
+  "system": "System",
+  "light": "Light",
+  "dark": "Dark",
+  "whatWouldYouLikeToKnow": "What would you like to know?"
+}

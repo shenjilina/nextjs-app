@@ -1,0 +1,21 @@
+{
+  "settings": "设置",
+  "manage": "管理账户与偏好设置",
+  "general": "通用",
+  "theme": "界面主题",
+  "language": "语言",
+  "phrases": "常用语",
+  "autoExpand": "自动展开参考网页",
+  "agreement": "用户协议",
+  "privacy": "隐私协议",
+  "logout": "退出登录",
+  "cancel": "取消",
+  "confirm": "确定",
+  "free": "免费版",
+  "newChat": "新聊天",
+  "yourChats": "你的聊天",
+  "system": "跟随系统",
+  "light": "浅色",
+  "dark": "深色",
+  "whatWouldYouLikeToKnow": "你想知道什么？"
+}
