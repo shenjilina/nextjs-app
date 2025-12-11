@@ -15,7 +15,7 @@ export default function Sidebar() {
   const [collapsed, setCollapsed] = useState(false)
   const [open, setOpen] = useState(false)
   const { t } = useI18n()
-  const { get } = useFetch()
+  const { get, post } = useFetch()
   const [user, setUser] = useState<{
     id: string
     name: string
@@ -29,8 +29,22 @@ export default function Sidebar() {
     get('/api/v1/users', { query: { id: 'u_1' } })
       .then((data) => {
         if (Array.isArray(data) && data?.length) {
-          setUser(data[0] as any);
+          setUser(data[0] as any)
         }
+      })
+      .catch(() => {})
+    post('/api/v1/users', {
+      query: {
+        email: 'shen@example.com',
+        id: 'u_1',
+        language: 'zh',
+        name: 'Shen Jilin',
+        plan: 'free',
+        theme: 'light',
+      },
+    })
+      .then((data) => {
+        console.log(data, 'post')
       })
       .catch(() => {})
   }, [])
