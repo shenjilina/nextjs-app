@@ -2,33 +2,18 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/lib/i18n";
-import useFetch from "@/lib/hooks/useFetch";
 import { PenLine, Sparkles, ChevronLeft, ChevronRight } from "lucide-react";
-import ModalDialog from "./ModalDialog";
-import { User } from "@/types/users";
+import UserLogin from "./UserLogin";
 
 export default function Sidebar() {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
-  const [open, setOpen] = useState(false);
+
   const { t } = useI18n();
-  const { get } = useFetch();
-  const [user, setUser] = useState<User | null>(null);
-
-  useEffect(() => {
-    get("/api/v1/users", { query: { id: "u_1" } })
-      .then((data) => {
-        setUser(data as User);
-      })
-      .catch(() => {});
-  }, []);
-
-  const initial = (user?.name?.[0] ?? "S").toUpperCase();
-  const planLabel = user?.plan ? t(user?.plan) : "free";
 
   // Memoize navigation items to avoid unnecessary re-renders
   const nav = useMemo(() => [{ label: t("newChat"), icon: PenLine, href: "/chat" }], [t]);
@@ -41,10 +26,6 @@ export default function Sidebar() {
     ],
     []
   );
-
-  const handleUserInfo = () => {
-    setOpen(true);
-  };
 
   return (
     <>
@@ -99,21 +80,10 @@ export default function Sidebar() {
           </div>
 
           <div className="mt-auto">
-            <div className={cn("flex items-center gap-3 cursor-pointer hover:bg-muted p-3", collapsed && "justify-center")} onClick={() => handleUserInfo()}>
-              <div className="flex items-center gap-2">
-                <span className="inline-flex size-7 items-center justify-center rounded-full bg-orange-600 text-white text-xs">{initial}</span>
-                {!collapsed && (
-                  <div className="leading-tight">
-                    <span className="text-sm">{user?.name ?? "..."}</span>
-                    <div className="text-xs text-muted-foreground">{planLabel}</div>
-                  </div>
-                )}
-              </div>
-            </div>
+            <UserLogin collapsed={collapsed}></UserLogin>
           </div>
         </div>
       </aside>
-      <ModalDialog open={open} onOpenChange={setOpen} user={user} initial={initial} />
     </>
   );
 }

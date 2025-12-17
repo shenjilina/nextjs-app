@@ -13,7 +13,7 @@ module.exports = {
   // 在Vue文件中缩进脚本和样式标签。
   vueIndentScriptAndStyle: true,
   // 一行最多 100 字符
-  printWidth: 160,
+  printWidth: 100,
   // 对象的 key 仅在必要时用引号
   quoteProps: "as-needed",
   // 大括号内的首尾需要空格

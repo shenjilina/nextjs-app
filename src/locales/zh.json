@@ -17,5 +17,9 @@
   "system": "跟随系统",
   "light": "浅色",
   "dark": "深色",
-  "whatWouldYouLikeToKnow": "你想知道什么？"
+  "whatWouldYouLikeToKnow": "你想知道什么？",
+  "login": "登录",
+  "notLoggedIn": "未登录",
+  "loginDescription": "登录以获得更智能的回复",
+  "switchLanguage": "切换语言"
 }

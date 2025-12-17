@@ -17,5 +17,9 @@
   "system": "System",
   "light": "Light",
   "dark": "Dark",
-  "whatWouldYouLikeToKnow": "What would you like to know?"
+  "whatWouldYouLikeToKnow": "What would you like to know?",
+  "login": "Login",
+  "notLoggedIn": "Not logged in",
+  "loginDescription": "Sign in to get smarter replies",
+  "switchLanguage": "Switch language"
 }

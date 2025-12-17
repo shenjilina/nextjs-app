@@ -6,13 +6,9 @@ import {
   MessageBranchNext,
   MessageBranchPage,
   MessageBranchPrevious,
-  MessageBranchSelector,
+  MessageBranchSelector
 } from "@/components/ai-elements/message";
-import {
-  Conversation,
-  ConversationContent,
-  ConversationScrollButton,
-} from "@/components/ai-elements/conversation";
+import { Conversation, ConversationContent, ConversationScrollButton } from "@/components/ai-elements/conversation";
 import { Message, MessageContent } from "@/components/ai-elements/message";
 import {
   PromptInput,
@@ -22,7 +18,7 @@ import {
   type PromptInputMessage,
   PromptInputSubmit,
   PromptInputTextarea,
-  PromptInputTools,
+  PromptInputTools
 } from "@/components/ai-elements/prompt-input";
 import {
   ModelSelector,
@@ -35,24 +31,14 @@ import {
   ModelSelectorLogo,
   ModelSelectorLogoGroup,
   ModelSelectorName,
-  ModelSelectorTrigger,
+  ModelSelectorTrigger
 } from "@/components/ai-elements/model-selector";
-import {
-  Reasoning,
-  ReasoningContent,
-  ReasoningTrigger,
-} from "@/components/ai-elements/reasoning";
+import { Reasoning, ReasoningContent, ReasoningTrigger } from "@/components/ai-elements/reasoning";
 import { MessageResponse } from "@/components/ai-elements/message";
-import {
-  Source,
-  Sources,
-  SourcesContent,
-  SourcesTrigger,
-} from "@/components/ai-elements/sources";
+import { Source, Sources, SourcesContent, SourcesTrigger } from "@/components/ai-elements/sources";
 import { Suggestion, Suggestions } from "@/components/ai-elements/suggestion";
 import type { ToolUIPart } from "ai";
 import { CheckIcon } from "lucide-react";
-import { nanoid } from "nanoid";
 import { useCallback, useState } from "react";
 import { toast } from "sonner";
 import models from "../config/index";
@@ -86,9 +72,9 @@ const initialMessages: MessageType[] = [
     versions: [
       {
         id: "m1v1",
-        content: "Can you explain how to use React hooks effectively?",
-      },
-    ],
+        content: "Can you explain how to use React hooks effectively?"
+      }
+    ]
   },
   {
     key: "m2",
@@ -96,12 +82,12 @@ const initialMessages: MessageType[] = [
     sources: [
       {
         href: "https://react.dev/reference/react",
-        title: "React Documentation",
+        title: "React Documentation"
       },
       {
         href: "https://react.dev/reference/react-dom",
-        title: "React DOM Documentation",
-      },
+        title: "React DOM Documentation"
+      }
     ],
     tools: [
       {
@@ -110,7 +96,7 @@ const initialMessages: MessageType[] = [
         status: "input-available",
         parameters: {
           query: "React hooks best practices",
-          source: "react.dev",
+          source: "react.dev"
         },
         result: `{
   "query": "React hooks best practices",
@@ -132,8 +118,8 @@ const initialMessages: MessageType[] = [
     }
   ]
 }`,
-        error: undefined,
-      },
+        error: undefined
+      }
     ],
     versions: [
       {
@@ -173,9 +159,9 @@ function ProfilePage({ userId }) {
 }
 \`\`\`
 
-Would you like me to explain any specific hook in more detail?`,
-      },
-    ],
+Would you like me to explain any specific hook in more detail?`
+      }
+    ]
   },
   {
     key: "m3",
@@ -183,20 +169,19 @@ Would you like me to explain any specific hook in more detail?`,
     versions: [
       {
         id: "m3v1",
-        content:
-          "Yes, could you explain useCallback and useMemo in more detail? When should I use one over the other?",
+        content: "Yes, could you explain useCallback and useMemo in more detail? When should I use one over the other?"
       },
       {
         id: "m3v2",
         content:
-          "I'm particularly interested in understanding the performance implications of useCallback and useMemo. Could you break down when each is most appropriate?",
+          "I'm particularly interested in understanding the performance implications of useCallback and useMemo. Could you break down when each is most appropriate?"
       },
       {
         id: "m3v3",
         content:
-          "Thanks for the overview! Could you dive deeper into the specific use cases where useCallback and useMemo make the biggest difference in React applications?",
-      },
-    ],
+          "Thanks for the overview! Could you dive deeper into the specific use cases where useCallback and useMemo make the biggest difference in React applications?"
+      }
+    ]
   },
   {
     key: "m4",
@@ -209,7 +194,7 @@ The useCallback hook is used to memoize functions to prevent unnecessary re-rend
 The useMemo hook is used to memoize values to avoid expensive recalculations on every render.
 
 Both hooks help with performance optimization, but they serve different purposes.`,
-      duration: 10,
+      duration: 10
     },
     versions: [
       {
@@ -258,10 +243,10 @@ const sortedList = useMemo(() => expensiveSort(items), [items]);
 
 ### Performance Note
 
-Don't overuse these hooks! They come with their own overhead. Only use them when you have identified a genuine performance issue.`,
-      },
-    ],
-  },
+Don't overuse these hooks! They come with their own overhead. Only use them when you have identified a genuine performance issue.`
+      }
+    ]
+  }
 ];
 
 const suggestions = [
@@ -272,7 +257,7 @@ const suggestions = [
   "Tell me about TypeScript benefits",
   "How to optimize database queries?",
   "What is the difference between SQL and NoSQL?",
-  "Explain cloud computing basics",
+  "Explain cloud computing basics"
 ];
 
 const mockResponses = [
@@ -280,61 +265,50 @@ const mockResponses = [
   "I'd be happy to explain this topic in detail. From my understanding, there are several important factors to consider when approaching this problem. Let me break it down step by step for you.",
   "This is an interesting topic that comes up frequently. The solution typically involves understanding the core concepts and applying them in the right context. Here's what I recommend...",
   "Great choice of topic! This is something that many developers encounter. The approach I'd suggest is to start with the fundamentals and then build up to more complex scenarios.",
-  "That's definitely worth exploring. From what I can see, the best way to handle this is to consider both the theoretical aspects and practical implementation details.",
+  "That's definitely worth exploring. From what I can see, the best way to handle this is to consider both the theoretical aspects and practical implementation details."
 ];
 
 const ChatBox = () => {
   const [selectedModel, setSelectedModel] = useState<string>(models[0].id);
   const [modelSelectorOpen, setModelSelectorOpen] = useState(false);
   const [text, setText] = useState<string>("");
-  const [status, setStatus] = useState<
-    "submitted" | "streaming" | "ready" | "error"
-  >("ready");
+  const [status, setStatus] = useState<"submitted" | "streaming" | "ready" | "error">("ready");
   const [messages, setMessages] = useState<MessageType[]>(initialMessages);
-  const [streamingMessageId, setStreamingMessageId] = useState<string | null>(
-    null
-  );
+  const [streamingMessageId, setStreamingMessageId] = useState<string | null>(null);
   console.log(streamingMessageId);
 
   const selectedModelData = models.find((m) => m.id === selectedModel);
 
   const chefs = Array.from(new Set(models.map((model) => model.chef)));
 
-  const streamResponse = useCallback(
-    async (messageId: string, content: string) => {
-      setStatus("streaming");
-      setStreamingMessageId(messageId);
+  const streamResponse = useCallback(async (messageId: string, content: string) => {
+    setStatus("streaming");
+    setStreamingMessageId(messageId);
 
-      const words = content.split(" ");
-      let currentContent = "";
+    const words = content.split(" ");
+    let currentContent = "";
 
-      for (let i = 0; i < words.length; i++) {
-        currentContent += (i > 0 ? " " : "") + words[i];
+    for (let i = 0; i < words.length; i++) {
+      currentContent += (i > 0 ? " " : "") + words[i];
 
-        setMessages((prev) =>
-          prev.map((msg) => {
-            if (msg.versions.some((v) => v.id === messageId)) {
-              return {
-                ...msg,
-                versions: msg.versions.map((v) =>
-                  v.id === messageId ? { ...v, content: currentContent } : v
-                ),
-              };
-            }
-            return msg;
-          })
-        );
+      setMessages((prev) =>
+        prev.map((msg) => {
+          if (msg.versions.some((v) => v.id === messageId)) {
+            return {
+              ...msg,
+              versions: msg.versions.map((v) => (v.id === messageId ? { ...v, content: currentContent } : v))
+            };
+          }
+          return msg;
+        })
+      );
 
-        await new Promise((resolve) =>
-          setTimeout(resolve, Math.random() * 100 + 50)
-        );
-      }
+      await new Promise((resolve) => setTimeout(resolve, Math.random() * 100 + 50));
+    }
 
-      setStatus("ready");
-      setStreamingMessageId(null);
-    },
-    []
-  );
+    setStatus("ready");
+    setStreamingMessageId(null);
+  }, []);
 
   const addUserMessage = useCallback(
     (content: string) => {
@@ -344,17 +318,16 @@ const ChatBox = () => {
         versions: [
           {
             id: `user-${Date.now()}`,
-            content,
-          },
-        ],
+            content
+          }
+        ]
       };
 
       setMessages((prev) => [...prev, userMessage]);
 
       setTimeout(() => {
         const assistantMessageId = `assistant-${Date.now()}`;
-        const randomResponse =
-          mockResponses[Math.floor(Math.random() * mockResponses.length)];
+        const randomResponse = mockResponses[Math.floor(Math.random() * mockResponses.length)];
 
         const assistantMessage: MessageType = {
           key: `assistant-${Date.now()}`,
@@ -362,9 +335,9 @@ const ChatBox = () => {
           versions: [
             {
               id: assistantMessageId,
-              content: "",
-            },
-          ],
+              content: ""
+            }
+          ]
         };
 
         setMessages((prev) => [...prev, assistantMessage]);
@@ -386,7 +359,7 @@ const ChatBox = () => {
 
     if (message.files?.length) {
       toast.success("Files attached", {
-        description: `${message.files.length} file(s) attached to message`,
+        description: `${message.files.length} file(s) attached to message`
       });
     }
 
@@ -404,28 +377,17 @@ const ChatBox = () => {
       <Conversation>
         <ConversationContent>
           {messages.map(({ versions, ...message }) => (
-            <MessageBranch
-              defaultBranch={0}
-              key={message.key}
-              className="mx-auto max-w-[750px]"
-            >
+            <MessageBranch defaultBranch={0} key={message.key} className="mx-auto max-w-[750px]">
               <MessageBranchContent>
                 {versions.map((version) => (
-                  <Message
-                    from={message.from}
-                    key={`${message.key}-${version.id}`}
-                  >
+                  <Message from={message.from} key={`${message.key}-${version.id}`}>
                     <div>
                       {message.sources?.length && (
                         <Sources>
                           <SourcesTrigger count={message.sources.length} />
                           <SourcesContent>
                             {message.sources.map((source) => (
-                              <Source
-                                href={source.href}
-                                key={source.href}
-                                title={source.title}
-                              />
+                              <Source href={source.href} key={source.href} title={source.title} />
                             ))}
                           </SourcesContent>
                         </Sources>
@@ -433,9 +395,7 @@ const ChatBox = () => {
                       {message.reasoning && (
                         <Reasoning duration={message.reasoning.duration}>
                           <ReasoningTrigger />
-                          <ReasoningContent>
-                            {message.reasoning.content}
-                          </ReasoningContent>
+                          <ReasoningContent>{message.reasoning.content}</ReasoningContent>
                         </Reasoning>
                       )}
                       <MessageContent>
@@ -460,39 +420,21 @@ const ChatBox = () => {
       <div className="grid shrink-0 gap-4 pt-4 mx-auto max-w-[750px]">
         <Suggestions className="px-4">
           {suggestions.map((suggestion) => (
-            <Suggestion
-              key={suggestion}
-              onClick={() => handleSuggestionClick(suggestion)}
-              suggestion={suggestion}
-            />
+            <Suggestion key={suggestion} onClick={() => handleSuggestionClick(suggestion)} suggestion={suggestion} />
           ))}
         </Suggestions>
         <div className="w-full px-4 pb-4">
           <PromptInput globalDrop multiple onSubmit={handleSubmit}>
             <PromptInputBody>
-              <PromptInputTextarea
-                onChange={(event) => setText(event.target.value)}
-                value={text}
-              />
+              <PromptInputTextarea onChange={(event) => setText(event.target.value)} value={text} />
             </PromptInputBody>
             <PromptInputFooter>
               <PromptInputTools>
-                <ModelSelector
-                  onOpenChange={setModelSelectorOpen}
-                  open={modelSelectorOpen}
-                >
+                <ModelSelector onOpenChange={setModelSelectorOpen} open={modelSelectorOpen}>
                   <ModelSelectorTrigger asChild>
                     <PromptInputButton>
-                      {selectedModelData?.chefSlug && (
-                        <ModelSelectorLogo
-                          provider={selectedModelData.chefSlug}
-                        />
-                      )}
-                      {selectedModelData?.name && (
-                        <ModelSelectorName>
-                          {selectedModelData.name}
-                        </ModelSelectorName>
-                      )}
+                      {selectedModelData?.chefSlug && <ModelSelectorLogo provider={selectedModelData.chefSlug} />}
+                      {selectedModelData?.name && <ModelSelectorName>{selectedModelData.name}</ModelSelectorName>}
                     </PromptInputButton>
                   </ModelSelectorTrigger>
                   <ModelSelectorContent>
@@ -516,17 +458,10 @@ const ChatBox = () => {
                                 <ModelSelectorName>{m.name}</ModelSelectorName>
                                 <ModelSelectorLogoGroup>
                                   {m.providers.map((provider) => (
-                                    <ModelSelectorLogo
-                                      key={provider}
-                                      provider={provider}
-                                    />
+                                    <ModelSelectorLogo key={provider} provider={provider} />
                                   ))}
                                 </ModelSelectorLogoGroup>
-                                {selectedModel === m.id ? (
-                                  <CheckIcon className="ml-auto size-4" />
-                                ) : (
-                                  <div className="ml-auto size-4" />
-                                )}
+                                {selectedModel === m.id ? <CheckIcon className="ml-auto size-4" /> : <div className="ml-auto size-4" />}
                               </ModelSelectorItem>
                             ))}
                         </ModelSelectorGroup>
@@ -535,10 +470,7 @@ const ChatBox = () => {
                   </ModelSelectorContent>
                 </ModelSelector>
               </PromptInputTools>
-              <PromptInputSubmit
-                disabled={!(text.trim() || status) || status === "streaming"}
-                status={status}
-              />
+              <PromptInputSubmit disabled={!(text.trim() || status) || status === "streaming"} status={status} />
             </PromptInputFooter>
           </PromptInput>
         </div>

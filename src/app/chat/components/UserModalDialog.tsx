@@ -10,14 +10,14 @@ import { User } from "@/types/users";
 export type ThemeOption = "system" | "light" | "dark";
 export type LangOption = "zh" | "en";
 
-export interface ModalDialogProps {
+export interface UserModalDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   user: User | null;
   initial: string;
 }
 
-export default function ModalDialog({ open, onOpenChange, user, initial }: ModalDialogProps) {
+export default function UserModalDialog({ open, onOpenChange, user, initial }: UserModalDialogProps) {
   const { theme, setTheme } = useTheme();
   const { t, lang, setLanguage } = useI18n();
   const { name, email } = user ?? {};
