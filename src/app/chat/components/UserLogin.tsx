@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useAppSelector } from "@/types/redux";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/lib/i18n";
 import { UserRound } from "lucide-react";
+import { useUserStore } from "@/lib/stores/userStore";
 import { User } from "@/types/users";
 import useFetch from "@/lib/hooks/useFetch";
 import UserModalDialog from "./UserModalDialog";
@@ -17,7 +17,7 @@ type UserLoginProps = {
 export default function UserLogin({ collapsed }: UserLoginProps) {
   const { t } = useI18n();
   const { get } = useFetch();
-  const userStore = useAppSelector((s) => s.user.userInfo);
+  const userStore = useUserStore((s) => s.userInfo);
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {

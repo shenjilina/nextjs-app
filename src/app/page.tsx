@@ -1,6 +1,9 @@
 import Link from "next/link";
-import ReduxCounter from "@/components/ReduxCounter";
-export default async function Home({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
+export default async function Home({
+  searchParams
+}: {
+  searchParams: Promise<{ error?: string }>;
+}) {
   const { error } = await searchParams;
   if (error) {
     throw new Error("Home page error");
@@ -17,9 +20,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ e
         >
           跳转到聊天页面
         </Link>
-        <div className="pt-6">
-          <ReduxCounter />
-        </div>
+        <div className="pt-6"></div>
       </div>
     </div>
   );
