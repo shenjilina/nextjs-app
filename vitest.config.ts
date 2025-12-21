@@ -12,13 +12,10 @@ export default defineConfig({
   ],
   test: {
     // 测试文件匹配规则
-    include: ['src/tests/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+    include: ['tests/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
 
     // 全局环境：使用 JSDOM 模拟浏览器环境（适合 React 组件测试）
     environment: 'jsdom',
-
-    // 全局 setup 文件
-    setupFiles: ['src/tests/setup.ts'],
 
     // 模拟 Next.js 特有模块（避免 SSR 报错）
     alias: {
@@ -37,7 +34,7 @@ export default defineConfig({
       reporter: ['text', 'json', 'html'],
       exclude: [
         'node_modules/',
-        'src/tests/',
+        'tests/',
         'vitest.config.ts',
         '.next/',
         'next.config.ts',
