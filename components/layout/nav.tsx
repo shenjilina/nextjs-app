@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { Button } from "../ui/button"
-import { BookOpen, Info, GlobeIcon } from "lucide-react"
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Button } from "../ui/button";
+import { BookOpen, Info, GlobeIcon } from "lucide-react";
 
 export default function Nav() {
-  const pathname = usePathname()
-  const blogActive = pathname.startsWith("/blog")
-  const aboutActive = pathname.startsWith("/about")
+  const pathname = usePathname();
+  const blogActive = pathname.startsWith("/blog");
+  const aboutActive = pathname.startsWith("/about");
 
   return (
     <nav>
@@ -33,5 +33,5 @@ export default function Nav() {
         </Button>
       </div>
     </nav>
-  )
+  );
 }

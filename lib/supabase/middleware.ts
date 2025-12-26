@@ -1,5 +1,5 @@
-import { createServerClient } from '@supabase/ssr';
-import { NextResponse, type NextRequest } from 'next/server';
+import { createServerClient } from "@supabase/ssr";
+import { NextResponse, type NextRequest } from "next/server";
 
 /**
  * Create a Supabase client for use in Next.js middleware.
@@ -8,8 +8,8 @@ import { NextResponse, type NextRequest } from 'next/server';
 export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({
     request: {
-      headers: request.headers,
-    },
+      headers: request.headers
+    }
   });
 
   const supabase = createServerClient(
@@ -25,8 +25,8 @@ export async function updateSession(request: NextRequest) {
             request.cookies.set(name, value);
             response.cookies.set(name, value, options);
           });
-        },
-      },
+        }
+      }
     }
   );
 

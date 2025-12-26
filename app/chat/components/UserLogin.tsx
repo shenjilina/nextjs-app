@@ -38,9 +38,17 @@ export default function UserLogin({ collapsed }: UserLoginProps) {
   return (
     <>
       {userStore ? (
-        <div className={cn("flex items-center gap-3 cursor-pointer hover:bg-muted p-3", collapsed && "justify-center")} onClick={() => handleUserInfo()}>
+        <div
+          className={cn(
+            "flex items-center gap-3 cursor-pointer hover:bg-muted p-3",
+            collapsed && "justify-center"
+          )}
+          onClick={() => handleUserInfo()}
+        >
           <div className="flex items-center gap-2">
-            <span className="inline-flex size-7 items-center justify-center rounded-full bg-orange-600 text-white text-xs">{initial}</span>
+            <span className="inline-flex size-7 items-center justify-center rounded-full bg-orange-600 text-white text-xs">
+              {initial}
+            </span>
             {!collapsed && (
               <div className="leading-tight">
                 <span className="text-sm">{user?.name ?? "..."}</span>
@@ -51,7 +59,10 @@ export default function UserLogin({ collapsed }: UserLoginProps) {
         </div>
       ) : (
         <div
-          className={cn("group flex items-center gap-3 cursor-pointer p-3 hover:bg-muted transition-colors", collapsed && "justify-center")}
+          className={cn(
+            "group flex items-center gap-3 cursor-pointer p-3 hover:bg-muted transition-colors",
+            collapsed && "justify-center"
+          )}
           onClick={() => setOpen(true)}
         >
           <span className="inline-flex size-7 items-center justify-center rounded-full bg-sky-500 text-white">

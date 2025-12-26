@@ -1,23 +1,32 @@
 "use client";
 
 import * as React from "react";
-import { Controller, type ControllerProps, type FieldPath, type FieldValues, FormProvider, type FormProviderProps } from "react-hook-form";
+import {
+  Controller,
+  type ControllerProps,
+  type FieldPath,
+  type FieldValues,
+  FormProvider,
+  type FormProviderProps
+} from "react-hook-form";
 import { cn } from "../../lib/utils";
 
-export type FormProps<TFieldValues extends FieldValues = FieldValues> = FormProviderProps<TFieldValues>;
+export type FormProps<TFieldValues extends FieldValues = FieldValues> =
+  FormProviderProps<TFieldValues>;
 
 export function Form<TFieldValues extends FieldValues>({ ...props }: FormProps<TFieldValues>) {
   return <FormProvider {...props} />;
 }
 
-export type FormFieldProps<TFieldValues extends FieldValues = FieldValues, TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>> = ControllerProps<
-  TFieldValues,
-  TName
->;
+export type FormFieldProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+> = ControllerProps<TFieldValues, TName>;
 
-export function FormField<TFieldValues extends FieldValues = FieldValues, TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>>(
-  props: FormFieldProps<TFieldValues, TName>
-) {
+export function FormField<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+>(props: FormFieldProps<TFieldValues, TName>) {
   return <Controller {...props} />;
 }
 

@@ -1,6 +1,6 @@
-'use client'
-import { useRef, useState } from 'react'
-import { useRouter } from 'next/navigation'
+"use client";
+import { useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   PromptInput,
   PromptInputBody,
@@ -9,8 +9,8 @@ import {
   PromptInputSubmit,
   PromptInputTools,
   type PromptInputMessage,
-  PromptInputButton,
-} from '../../components/ai-elements/prompt-input'
+  PromptInputButton
+} from "../../components/ai-elements/prompt-input";
 import {
   ModelSelector,
   ModelSelectorContent,
@@ -22,34 +22,34 @@ import {
   ModelSelectorLogo,
   ModelSelectorLogoGroup,
   ModelSelectorName,
-  ModelSelectorTrigger,
-} from '../../components/ai-elements/model-selector'
-import { CheckIcon } from 'lucide-react'
-import models from './config/index'
+  ModelSelectorTrigger
+} from "../../components/ai-elements/model-selector";
+import { CheckIcon } from "lucide-react";
+import models from "./config/index";
 
 export default function ChatPage() {
-  const router = useRouter()
-  const textareaRef = useRef<HTMLTextAreaElement>(null)
-  const [text, setText] = useState<string>('')
-  const [status, setStatus] = useState<'submitted' | 'streaming' | 'ready' | 'error'>('ready')
+  const router = useRouter();
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [text, setText] = useState<string>("");
+  const [status, setStatus] = useState<"submitted" | "streaming" | "ready" | "error">("ready");
   const handleSubmit = (message: PromptInputMessage) => {
-    console.log(message)
-    setStatus('streaming')
+    console.log(message);
+    setStatus("streaming");
     setTimeout(() => {
-      setStatus('submitted')
-      setText('')
+      setStatus("submitted");
+      setText("");
       // 跳转页面
-      router.push(`/chat/${message.text}`)
-    }, 2000)
-  }
+      router.push(`/chat/${message.text}`);
+    }, 2000);
+  };
 
-  const [selectedModel, setSelectedModel] = useState<string>(models[0].id)
-  const [modelselectoropen, setModelSelectorOpen] = useState(false)
+  const [selectedModel, setSelectedModel] = useState<string>(models[0].id);
+  const [modelselectoropen, setModelSelectorOpen] = useState(false);
 
-  const selectedModelData = models.find((model) => model.id === selectedModel)
+  const selectedModelData = models.find((model) => model.id === selectedModel);
 
   // Get unique chefs in order of appearance
-  const chefs = Array.from(new Set(models.map((model) => model.chef)))
+  const chefs = Array.from(new Set(models.map((model) => model.chef)));
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center">
@@ -85,8 +85,8 @@ export default function ChatPage() {
                               <ModelSelectorItem
                                 key={m.id}
                                 onSelect={() => {
-                                  setSelectedModel(m.id)
-                                  setModelSelectorOpen(false)
+                                  setSelectedModel(m.id);
+                                  setModelSelectorOpen(false);
                                 }}
                                 value={m.id}
                               >
@@ -111,7 +111,7 @@ export default function ChatPage() {
                 </ModelSelector>
               </PromptInputTools>
               <PromptInputSubmit
-                disabled={!(text.trim() || status) || status === 'streaming'}
+                disabled={!(text.trim() || status) || status === "streaming"}
                 status={status}
               />
             </PromptInputFooter>
@@ -119,5 +119,5 @@ export default function ChatPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -39,8 +39,14 @@ const JUDY_THEME: VisualTheme = {
 };
 
 const loginSchema = z.object({
-  username: z.string().min(1, "login.validation.usernameRequired").max(64, "login.validation.usernameTooLong"),
-  password: z.string().min(6, "login.validation.passwordTooShort").max(128, "login.validation.passwordTooLong")
+  username: z
+    .string()
+    .min(1, "login.validation.usernameRequired")
+    .max(64, "login.validation.usernameTooLong"),
+  password: z
+    .string()
+    .min(6, "login.validation.passwordTooShort")
+    .max(128, "login.validation.passwordTooLong")
 });
 
 type LoginFormState = z.infer<typeof loginSchema> & { remember: boolean };
@@ -501,13 +507,7 @@ function useThreeLoginScene(
   return controllerRef;
 }
 
-function ThreeBackdrop({
-  theme,
-  onReady
-}: {
-  theme: VisualTheme;
-  onReady: () => void;
-}) {
+function ThreeBackdrop({ theme, onReady }: { theme: VisualTheme; onReady: () => void }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const controllerRef = useThreeLoginScene(canvasRef, theme, onReady);
 
@@ -719,7 +719,9 @@ export default function LoginPage() {
                     />
                     <span>{t("login.judySubtitle")}</span>
                   </div>
-                  <h1 className="text-2xl font-semibold tracking-tight text-white">{t("login.title")}</h1>
+                  <h1 className="text-2xl font-semibold tracking-tight text-white">
+                    {t("login.title")}
+                  </h1>
                   <p className="text-sm text-white/75">{t("login.tagline")}</p>
                 </div>
 

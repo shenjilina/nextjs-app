@@ -31,6 +31,6 @@ module.exports = {
   proseWrap: "preserve",
   // 根据显示样式决定 html 要不要折行
   htmlWhitespaceSensitivity: "css",
-  // 换行符使用 lf
-  endOfLine: "lf"
+  // 换行符使用 auto（避免 Windows/CI 因 CRLF/LF 差异导致 format:check 失败）
+  endOfLine: "auto"
 };

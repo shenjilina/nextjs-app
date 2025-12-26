@@ -77,8 +77,9 @@ pnpm test:coverage # Run tests with coverage report
    - Place in `app/api/v1/**/route.ts`
    - Export HTTP methods: `GET`, `POST`, `PUT`, `PATCH`, `DELETE`
    - Use response helpers from `lib/api/response.ts`:
+
      ```typescript
-     import { successResponse, badRequest, validationError } from '@/lib/api/response';
+     import { successResponse, badRequest, validationError } from "@/lib/api/response";
 
      // Success
      return successResponse(data, 200, "Optional message");
@@ -111,16 +112,17 @@ pnpm test:coverage # Run tests with coverage report
 
 ```typescript
 // Use import type for type-only imports
-import type { User } from '@/types/users';
+import type { User } from "@/types/users";
 
 // Path aliases over relative paths
-import { apiClient } from '@/lib/api/client';
-import { Button } from '@/components/ui/button';
+import { apiClient } from "@/lib/api/client";
+import { Button } from "@/components/ui/button";
 ```
 
 ## Code Quality Standards
 
 Before committing changes, ensure:
+
 1. `pnpm lint` passes
 2. `pnpm format:check` passes
 3. `pnpm test:run` passes

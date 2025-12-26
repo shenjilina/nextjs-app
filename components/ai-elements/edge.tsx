@@ -6,7 +6,7 @@ import {
   type InternalNode,
   type Node,
   Position,
-  useInternalNode,
+  useInternalNode
 } from "@xyflow/react";
 
 const Temporary = ({
@@ -16,7 +16,7 @@ const Temporary = ({
   targetX,
   targetY,
   sourcePosition,
-  targetPosition,
+  targetPosition
 }: EdgeProps) => {
   const [edgePath] = getSimpleBezierPath({
     sourceX,
@@ -24,7 +24,7 @@ const Temporary = ({
     sourcePosition,
     targetX,
     targetY,
-    targetPosition,
+    targetPosition
   });
 
   return (
@@ -33,16 +33,13 @@ const Temporary = ({
       id={id}
       path={edgePath}
       style={{
-        strokeDasharray: "5, 5",
+        strokeDasharray: "5, 5"
       }}
     />
   );
 };
 
-const getHandleCoordsByPosition = (
-  node: InternalNode<Node>,
-  handlePosition: Position
-) => {
+const getHandleCoordsByPosition = (node: InternalNode<Node>, handlePosition: Position) => {
   // Choose the handle type based on position - Left is for target, Right is for source
   const handleType = handlePosition === Position.Left ? "target" : "source";
 
@@ -83,10 +80,7 @@ const getHandleCoordsByPosition = (
   return [x, y] as const;
 };
 
-const getEdgeParams = (
-  source: InternalNode<Node>,
-  target: InternalNode<Node>
-) => {
+const getEdgeParams = (source: InternalNode<Node>, target: InternalNode<Node>) => {
   const sourcePos = Position.Right;
   const [sx, sy] = getHandleCoordsByPosition(source, sourcePos);
   const targetPos = Position.Left;
@@ -98,7 +92,7 @@ const getEdgeParams = (
     tx,
     ty,
     sourcePos,
-    targetPos,
+    targetPos
   };
 };
 
@@ -110,10 +104,7 @@ const Animated = ({ id, source, target, markerEnd, style }: EdgeProps) => {
     return null;
   }
 
-  const { sx, sy, tx, ty, sourcePos, targetPos } = getEdgeParams(
-    sourceNode,
-    targetNode
-  );
+  const { sx, sy, tx, ty, sourcePos, targetPos } = getEdgeParams(sourceNode, targetNode);
 
   const [edgePath] = getBezierPath({
     sourceX: sx,
@@ -121,7 +112,7 @@ const Animated = ({ id, source, target, markerEnd, style }: EdgeProps) => {
     sourcePosition: sourcePos,
     targetX: tx,
     targetY: ty,
-    targetPosition: targetPos,
+    targetPosition: targetPos
   });
 
   return (
@@ -136,5 +127,5 @@ const Animated = ({ id, source, target, markerEnd, style }: EdgeProps) => {
 
 export const Edge = {
   Temporary,
-  Animated,
+  Animated
 };

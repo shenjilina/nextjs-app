@@ -36,9 +36,17 @@ export type UseFetchOptions = FetchClientOptions;
 export type UseFetchResult<T = unknown> = {
   request: (opts: RequestOptions) => Promise<T>;
   get: (path: string, opts?: Omit<RequestOptions, "path" | "method" | "body">) => Promise<T>;
-  post: (path: string, body?: unknown, opts?: Omit<RequestOptions, "path" | "method">) => Promise<T>;
+  post: (
+    path: string,
+    body?: unknown,
+    opts?: Omit<RequestOptions, "path" | "method">
+  ) => Promise<T>;
   put: (path: string, body?: unknown, opts?: Omit<RequestOptions, "path" | "method">) => Promise<T>;
-  patch: (path: string, body?: unknown, opts?: Omit<RequestOptions, "path" | "method">) => Promise<T>;
+  patch: (
+    path: string,
+    body?: unknown,
+    opts?: Omit<RequestOptions, "path" | "method">
+  ) => Promise<T>;
   del: (path: string, opts?: Omit<RequestOptions, "path" | "method" | "body">) => Promise<T>;
   abort: () => void;
   loading: boolean;
@@ -115,8 +123,10 @@ export function useFetch<T = unknown>(options?: UseFetchOptions): UseFetchResult
       const backoff = opts.retryDelayMs ?? retryDelayMs;
 
       const initHeaders: Record<string, string> = { ...baseInitHeaders, ...opts.headers };
-      const isBodyJson = method !== "GET" && opts.body !== undefined && !(opts.body instanceof FormData);
-      if (isBodyJson) initHeaders["content-type"] = initHeaders["content-type"] ?? "application/json";
+      const isBodyJson =
+        method !== "GET" && opts.body !== undefined && !(opts.body instanceof FormData);
+      if (isBodyJson)
+        initHeaders["content-type"] = initHeaders["content-type"] ?? "application/json";
 
       inflightRef.current += 1;
       setLoading(true);
@@ -204,23 +214,28 @@ export function useFetch<T = unknown>(options?: UseFetchOptions): UseFetchResult
   const request = useCallback((opts: RequestOptions) => perform(opts), [perform]);
 
   const get = useCallback(
-    (path: string, opts?: Omit<RequestOptions, "path" | "method" | "body">) => request({ ...(opts || {}), path, method: "GET" }),
+    (path: string, opts?: Omit<RequestOptions, "path" | "method" | "body">) =>
+      request({ ...(opts || {}), path, method: "GET" }),
     [request]
   );
   const post = useCallback(
-    (path: string, body?: unknown, opts?: Omit<RequestOptions, "path" | "method">) => request({ ...(opts || {}), path, method: "POST", body }),
+    (path: string, body?: unknown, opts?: Omit<RequestOptions, "path" | "method">) =>
+      request({ ...(opts || {}), path, method: "POST", body }),
     [request]
   );
   const put = useCallback(
-    (path: string, body?: unknown, opts?: Omit<RequestOptions, "path" | "method">) => request({ ...(opts || {}), path, method: "PUT", body }),
+    (path: string, body?: unknown, opts?: Omit<RequestOptions, "path" | "method">) =>
+      request({ ...(opts || {}), path, method: "PUT", body }),
     [request]
   );
   const patch = useCallback(
-    (path: string, body?: unknown, opts?: Omit<RequestOptions, "path" | "method">) => request({ ...(opts || {}), path, method: "PATCH", body }),
+    (path: string, body?: unknown, opts?: Omit<RequestOptions, "path" | "method">) =>
+      request({ ...(opts || {}), path, method: "PATCH", body }),
     [request]
   );
   const del = useCallback(
-    (path: string, opts?: Omit<RequestOptions, "path" | "method" | "body">) => request({ ...(opts || {}), path, method: "DELETE" }),
+    (path: string, opts?: Omit<RequestOptions, "path" | "method" | "body">) =>
+      request({ ...(opts || {}), path, method: "DELETE" }),
     [request]
   );
 

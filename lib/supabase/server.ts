@@ -1,5 +1,5 @@
-import { createServerClient } from '@supabase/ssr';
-import { cookies } from 'next/headers';
+import { createServerClient } from "@supabase/ssr";
+import { cookies } from "next/headers";
 
 /**
  * Create a Supabase client for use in Server Components, Route Handlers, and Server Actions.
@@ -24,8 +24,8 @@ export async function getSupabaseServerClient() {
             // The `setAll` method was called from a Server Component.
             // This can be ignored if you have middleware refreshing user sessions.
           }
-        },
-      },
+        }
+      }
     }
   );
 }

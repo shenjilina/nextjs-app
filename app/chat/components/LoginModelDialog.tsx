@@ -4,10 +4,23 @@ import { useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { Loader2Icon } from "lucide-react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "../../../components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription
+} from "../../../components/ui/dialog";
 import { Button } from "../../../components/ui/button";
 import { Input } from "../../../components/ui/input";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../../../components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage
+} from "../../../components/ui/form";
 import useFetch from "../../../lib/hooks/useFetch";
 
 const loginSchema = z.object({
@@ -89,7 +102,9 @@ export default function LoginModelDialog({ open, onOpenChange }: LoginModelDialo
       <DialogContent className="sm:max-w-md p-0 overflow-hidden">
         <DialogHeader className="px-6 pt-6 text-center">
           <DialogTitle className="text-xl font-semibold">登录或注册</DialogTitle>
-          <DialogDescription className="mt-1 text-sm text-muted-foreground">您将获得更加智能的回复并能上传文件、图片等内容。</DialogDescription>
+          <DialogDescription className="mt-1 text-sm text-muted-foreground">
+            您将获得更加智能的回复并能上传文件、图片等内容。
+          </DialogDescription>
         </DialogHeader>
 
         <div className="px-6 pb-6 space-y-4">
@@ -145,7 +160,11 @@ export default function LoginModelDialog({ open, onOpenChange }: LoginModelDialo
 
               {globalError && <FormMessage>{globalError}</FormMessage>}
 
-              <Button type="submit" className="w-full h-10 rounded-full text-sm font-medium" disabled={submitting}>
+              <Button
+                type="submit"
+                className="w-full h-10 rounded-full text-sm font-medium"
+                disabled={submitting}
+              >
                 {submitting && <Loader2Icon className="mr-2 size-4 animate-spin" />}
                 注册并登录
               </Button>

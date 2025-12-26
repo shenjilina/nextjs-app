@@ -56,7 +56,12 @@ export default function Sidebar() {
               const Icon = item.icon;
               const active = pathname.startsWith(item.href);
               return (
-                <Button key={item.href} asChild variant="secondary" className={cn("w-full justify-start", collapsed && "justify-center px-0")}>
+                <Button
+                  key={item.href}
+                  asChild
+                  variant="secondary"
+                  className={cn("w-full justify-start", collapsed && "justify-center px-0")}
+                >
                   <Link href={item.href} aria-current={active ? "page" : undefined}>
                     <Icon />
                     {!collapsed && <span>{item.label}</span>}
@@ -66,14 +71,23 @@ export default function Sidebar() {
             })}
           </div>
 
-          {!collapsed && <div className="px-3 pt-4 text-xs text-muted-foreground">{t("yourChats")}</div>}
+          {!collapsed && (
+            <div className="px-3 pt-4 text-xs text-muted-foreground">{t("yourChats")}</div>
+          )}
 
           <div className="px-3 space-y-1">
             {chats.map((c) => {
               const active = pathname === c.href;
               return (
-                <Button key={c.id} asChild variant={active ? "secondary" : "ghost"} className={cn("w-full justify-start", collapsed && "justify-center px-0")}>
-                  <Link href={c.href}>{!collapsed && <span className="truncate max-w-[180px]">{c.title}</span>}</Link>
+                <Button
+                  key={c.id}
+                  asChild
+                  variant={active ? "secondary" : "ghost"}
+                  className={cn("w-full justify-start", collapsed && "justify-center px-0")}
+                >
+                  <Link href={c.href}>
+                    {!collapsed && <span className="truncate max-w-[180px]">{c.title}</span>}
+                  </Link>
                 </Button>
               );
             })}

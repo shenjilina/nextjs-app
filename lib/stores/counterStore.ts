@@ -21,4 +21,3 @@ export const useCounterStore = create<CounterStore>()(
     { name: "counter" }
   )
 );
-

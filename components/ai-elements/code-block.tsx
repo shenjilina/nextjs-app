@@ -10,7 +10,7 @@ import {
   useContext,
   useEffect,
   useRef,
-  useState,
+  useState
 } from "react";
 import { type BundledLanguage, codeToHtml, type ShikiTransformer } from "shiki";
 
@@ -25,7 +25,7 @@ type CodeBlockContextType = {
 };
 
 const CodeBlockContext = createContext<CodeBlockContextType>({
-  code: "",
+  code: ""
 });
 
 const lineNumberTransformer: ShikiTransformer = {
@@ -41,12 +41,12 @@ const lineNumberTransformer: ShikiTransformer = {
           "mr-4",
           "text-right",
           "select-none",
-          "text-muted-foreground",
-        ],
+          "text-muted-foreground"
+        ]
       },
-      children: [{ type: "text", value: String(line) }],
+      children: [{ type: "text", value: String(line) }]
     });
-  },
+  }
 };
 
 export async function highlightCode(
@@ -54,21 +54,19 @@ export async function highlightCode(
   language: BundledLanguage,
   showLineNumbers = false
 ) {
-  const transformers: ShikiTransformer[] = showLineNumbers
-    ? [lineNumberTransformer]
-    : [];
+  const transformers: ShikiTransformer[] = showLineNumbers ? [lineNumberTransformer] : [];
 
   return await Promise.all([
     codeToHtml(code, {
       lang: language,
       theme: "one-light",
-      transformers,
+      transformers
     }),
     codeToHtml(code, {
       lang: language,
       theme: "one-dark-pro",
-      transformers,
-    }),
+      transformers
+    })
   ]);
 }
 
@@ -119,9 +117,7 @@ export const CodeBlock = ({
             dangerouslySetInnerHTML={{ __html: darkHtml }}
           />
           {children && (
-            <div className="absolute top-2 right-2 flex items-center gap-2">
-              {children}
-            </div>
+            <div className="absolute top-2 right-2 flex items-center gap-2">{children}</div>
           )}
         </div>
       </div>

@@ -8,7 +8,11 @@ import {
   MessageBranchPrevious,
   MessageBranchSelector
 } from "../../../components/ai-elements/message";
-import { Conversation, ConversationContent, ConversationScrollButton } from "../../../components/ai-elements/conversation";
+import {
+  Conversation,
+  ConversationContent,
+  ConversationScrollButton
+} from "../../../components/ai-elements/conversation";
 import { Message, MessageContent } from "../../../components/ai-elements/message";
 import {
   PromptInput,
@@ -33,9 +37,18 @@ import {
   ModelSelectorName,
   ModelSelectorTrigger
 } from "../../../components/ai-elements/model-selector";
-import { Reasoning, ReasoningContent, ReasoningTrigger } from "../../../components/ai-elements/reasoning";
+import {
+  Reasoning,
+  ReasoningContent,
+  ReasoningTrigger
+} from "../../../components/ai-elements/reasoning";
 import { MessageResponse } from "../../../components/ai-elements/message";
-import { Source, Sources, SourcesContent, SourcesTrigger } from "../../../components/ai-elements/sources";
+import {
+  Source,
+  Sources,
+  SourcesContent,
+  SourcesTrigger
+} from "../../../components/ai-elements/sources";
 import { Suggestion, Suggestions } from "../../../components/ai-elements/suggestion";
 import type { ToolUIPart } from "ai";
 import { CheckIcon } from "lucide-react";
@@ -169,7 +182,8 @@ Would you like me to explain any specific hook in more detail?`
     versions: [
       {
         id: "m3v1",
-        content: "Yes, could you explain useCallback and useMemo in more detail? When should I use one over the other?"
+        content:
+          "Yes, could you explain useCallback and useMemo in more detail? When should I use one over the other?"
       },
       {
         id: "m3v2",
@@ -296,7 +310,9 @@ const ChatBox = () => {
           if (msg.versions.some((v) => v.id === messageId)) {
             return {
               ...msg,
-              versions: msg.versions.map((v) => (v.id === messageId ? { ...v, content: currentContent } : v))
+              versions: msg.versions.map((v) =>
+                v.id === messageId ? { ...v, content: currentContent } : v
+              )
             };
           }
           return msg;
@@ -420,7 +436,11 @@ const ChatBox = () => {
       <div className="grid shrink-0 gap-4 pt-4 mx-auto max-w-[750px]">
         <Suggestions className="px-4">
           {suggestions.map((suggestion) => (
-            <Suggestion key={suggestion} onClick={() => handleSuggestionClick(suggestion)} suggestion={suggestion} />
+            <Suggestion
+              key={suggestion}
+              onClick={() => handleSuggestionClick(suggestion)}
+              suggestion={suggestion}
+            />
           ))}
         </Suggestions>
         <div className="w-full px-4 pb-4">
@@ -433,8 +453,12 @@ const ChatBox = () => {
                 <ModelSelector onOpenChange={setModelSelectorOpen} open={modelSelectorOpen}>
                   <ModelSelectorTrigger asChild>
                     <PromptInputButton>
-                      {selectedModelData?.chefSlug && <ModelSelectorLogo provider={selectedModelData.chefSlug} />}
-                      {selectedModelData?.name && <ModelSelectorName>{selectedModelData.name}</ModelSelectorName>}
+                      {selectedModelData?.chefSlug && (
+                        <ModelSelectorLogo provider={selectedModelData.chefSlug} />
+                      )}
+                      {selectedModelData?.name && (
+                        <ModelSelectorName>{selectedModelData.name}</ModelSelectorName>
+                      )}
                     </PromptInputButton>
                   </ModelSelectorTrigger>
                   <ModelSelectorContent>
@@ -461,7 +485,11 @@ const ChatBox = () => {
                                     <ModelSelectorLogo key={provider} provider={provider} />
                                   ))}
                                 </ModelSelectorLogoGroup>
-                                {selectedModel === m.id ? <CheckIcon className="ml-auto size-4" /> : <div className="ml-auto size-4" />}
+                                {selectedModel === m.id ? (
+                                  <CheckIcon className="ml-auto size-4" />
+                                ) : (
+                                  <div className="ml-auto size-4" />
+                                )}
                               </ModelSelectorItem>
                             ))}
                         </ModelSelectorGroup>
@@ -470,7 +498,10 @@ const ChatBox = () => {
                   </ModelSelectorContent>
                 </ModelSelector>
               </PromptInputTools>
-              <PromptInputSubmit disabled={!(text.trim() || status) || status === "streaming"} status={status} />
+              <PromptInputSubmit
+                disabled={!(text.trim() || status) || status === "streaming"}
+                status={status}
+              />
             </PromptInputFooter>
           </PromptInput>
         </div>
